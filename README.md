@@ -20,80 +20,107 @@
 
 一个轻量级 Web 仪表盘，自动拉取 DeepSeek API 用量数据到本地 SQLite，提供可视化图表和费用估算。**完全本地运行，数据不出你电脑。**
 
+---
+
+## 前置准备（必须先装）
+
+| 工具 | 下载 | 说明 |
+|------|------|------|
+| **Node.js** ≥ 18 | [nodejs.org](https://nodejs.org) | 点左边 LTS 按钮下载，安装一路下一步。装完就有 `npm` |
+| **Git**（推荐） | [git-scm.com](https://git-scm.com/download/win) | 选 Windows 版，一路下一步。没有也能用，看下方 B 方案 |
+
+---
+
 ## 快速开始
 
+### A 方案：有 Git（推荐）
+
 ```bash
-# 克隆项目
 git clone https://github.com/3609748118/deepseep-token-.git
 cd deepseep-token-
-
-# 配置 API Key
-cp .env.example .env
-# 编辑 .env，填入你的 DeepSeek API Key
-
-# 启动
-npm install && npm run dev
 ```
 
-浏览器打开 **http://localhost:5173**，开始监控。
+### B 方案：没有 Git
+
+打开 [github.com/3609748118/deepseep-token-](https://github.com/3609748118/deepseep-token-)，点绿色的 **Code** 按钮 → **Download ZIP**，解压到任意文件夹，然后在该文件夹里打开终端。
+
+### 然后都一样：
+
+```
+┌─────────────────────────────────────────────┐
+│ 1. 配置 API Key                              │
+│                                              │
+│    把 .env.example 复制一份改名为 .env         │
+│    用记事本打开 .env，把 your_deepseek_api...  │
+│    替换成你的 DeepSeek API Key                │
+│                                              │
+│    API Key 获取地址：                          │
+│    https://platform.deepseek.com/api_keys    │
+│                                              │
+│ 2. 安装依赖                                   │
+│                                              │
+│    npm install    （等 1-2 分钟）              │
+│                                              │
+│ 3. 启动                                       │
+│                                              │
+│    npm run dev                                │
+│                                              │
+│ 4. 打开浏览器                                 │
+│                                              │
+│    http://localhost:5173                     │
+└─────────────────────────────────────────────┘
+```
+
+---
 
 ## 功能
 
 | 模块 | 说明 |
 |------|------|
-| 汇总卡片 | 今日用量 / 本月用量 / 预估费用，一目了然 |
-| 用量图表 | 柱状图、折线图切换，输入/输出堆叠展示 |
-| 日视图 | 支持 7 / 14 / 30 天范围 |
-| 月视图 | 支持 3 / 6 / 12 月范围 |
-| 明细列表 | 按日期/用量/费用排序，支持升降序 |
-| 自动刷新 | 每 5 分钟自动拉取，也支持手动刷新 |
+| 汇总卡片 | 今日用量 / 本月用量 / 预估费用 |
+| 用量图表 | 柱状图 / 折线图切换，输入输出堆叠展示 |
+| 日视图 | 7 / 14 / 30 天范围可选 |
+| 月视图 | 3 / 6 / 12 月范围可选 |
+| 明细列表 | 按日期 / 用量 / 请求次数 / 费用排序 |
+| 自动刷新 | 每 5 分钟自动拉取，支持手动刷新 |
 | 费用估算 | 按 DeepSeek 官方定价自动计算 |
 
-## 项目结构
-
-```
-├── client/              # React 前端
-│   └── src/
-│       ├── components/
-│       │   ├── Header/           # 标题栏 + 倒计时 + 刷新
-│       │   ├── SummaryCards/     # 用量卡片
-│       │   ├── ViewSwitcher/     # 视图/范围切换
-│       │   ├── UsageChart/       # Recharts 图表
-│       │   └── UsageTable/       # 数据明细表
-│       ├── api/                  # API 请求
-│       └── hooks/                # 自定义 Hook
-├── server/              # Express 后端
-│   └── src/
-│       ├── routes/               # REST API
-│       ├── db.ts                 # SQLite 操作
-│       └── deepseek.ts           # DeepSeek API 调用
-└── docs/                # 设计文档
-```
+---
 
 ## 技术栈
 
 | 层 | 技术 |
 |----|------|
 | 前端 | React 19 · TypeScript · Vite · Recharts · CSS Modules |
-| 后端 | Express 5 · better-sqlite3 · node-cron · tsx |
+| 后端 | Express 5 · better-sqlite3 · node-cron |
 | 数据库 | SQLite（本地文件，零配置） |
 
-## 环境要求
-
-- **Node.js** ≥ 18
-- **DeepSeek API Key** — [获取地址](https://platform.deepseek.com/api_keys)
+---
 
 ## 常见问题
 
-**Q: 数据存在哪里？**  
-A: 本地 SQLite 文件 `server/data/usage.db`，不会上传到任何服务器。
+**Q: 打开网页没有数据？**
 
-**Q: 为什么刷新后没有数据？**  
-A: 首次使用需要等待 DeepSeek API 返回用量数据。检查 `.env` 中 API Key 是否正确，然后点「手动刷新」。
+首次需要拉取数据，点右上角「手动刷新」。还不行就检查 `.env` 里的 API Key 是否填对了。
 
-**Q: 可以多人共用吗？**  
-A: 每人 clone 一份到自己的电脑，各自配自己的 API Key，互不影响。
+**Q: npm install 报错？**
+
+`better-sqlite3` 需要 C++ 编译环境。Windows 上如果报错，去 [nodejs.org](https://nodejs.org) 重新安装 Node.js，安装时勾选「Automatically install the necessary tools」即可。
+
+**Q: 端口被占用？**
+
+默认前端 5173，后端 3001。如果冲突，在 `.env` 里改 `PORT=3002`，前端 vite 也会自动换端口。
+
+**Q: 数据存在哪里？**
+
+`server/data/usage.db`，本地 SQLite 文件，不上传任何服务器。
+
+**Q: 多人共用？**
+
+每人装一份，各自配自己的 API Key，互不影响。
+
+---
 
 ## License
 
-MIT © 2026
+MIT
