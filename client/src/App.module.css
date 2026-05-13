@@ -1,0 +1,29 @@
+.app {
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #fecaca;
+}
+
+.error button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #dc2626;
+  cursor: pointer;
+}

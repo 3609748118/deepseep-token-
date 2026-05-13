@@ -1,0 +1,7 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node \"d:/claude/dp 流量监控/.claude/statusline.mjs\"",
+    "padding": 0
+  }
+}
