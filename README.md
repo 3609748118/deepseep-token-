@@ -44,50 +44,70 @@ cd deepseep-token-
 
 打开 [github.com/3609748118/deepseep-token-](https://github.com/3609748118/deepseep-token-)，点绿色的 **Code** 按钮 → **Download ZIP**，解压到任意文件夹，然后在该文件夹里打开终端。
 
-### 都一样的后续步骤：
+### 接着往下走（A/B 方案都从这里继续）：
 
-**1. 配置 API Key**
+---
 
-Windows 用户：
-```bash
-copy .env.example .env
-notepad .env
-```
+#### 第 1 步：获取 DeepSeek API Key
 
-Mac / Linux 用户：
+浏览器打开 [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys)，登录后点「创建 API Key」，复制那串 `sk-` 开头的字符串。
+
+---
+
+#### 第 2 步：配置 API Key
+
+打开项目文件夹，找到 `.env.example` 这个文件：
+
+- **Windows**：右键 `.env.example` → 重命名 → 删掉 `.example` → 变成 `.env` → 双击用记事本打开
+- **Mac**：右键 → 重命名 → 去掉 `.example` → 双击打开，或者终端里跑：
+
 ```bash
 cp .env.example .env
 nano .env
 ```
 
-把文件里的 `your_deepseek_api_key_here` 替换成你的 DeepSeek API Key（去 [platform.deepseek.com/api_keys](https://platform.deepseek.com/api_keys) 复制），保存关闭。
+打开后你会看到：
+```
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+PORT=3001
+```
+
+把 `your_deepseek_api_key_here` 替换成第 1 步复制的 Key（`sk-` 开头那串），保存关闭。
 
 ---
 
-**2. 安装依赖**
+#### 第 3 步：安装依赖
+
+在项目文件夹里打开终端：
+
+- **Windows**：在文件夹地址栏输入 `cmd` 回车
+- **Mac**：右键文件夹 → 新建位于文件夹位置的终端窗口
 
 ```bash
 npm install
 ```
-等 1-2 分钟，装完后会自动继续装前端和后端的依赖。
 
-> 如果报错，可能是缺少 C++ 编译环境。去 [nodejs.org](https://nodejs.org) 重新安装 Node.js，安装时**勾选**「Automatically install the necessary tools」即可。
+等 1-2 分钟跑完。
+
+> 如果 `npm install` 报错（红字），去 [nodejs.org](https://nodejs.org) 重新装 Node.js，安装时勾选「Automatically install the necessary tools」，装完再跑一次。
 
 ---
 
-**3. 启动**
+#### 第 4 步：启动
 
 ```bash
 npm run dev
 ```
 
-看到 `Local: http://localhost:5173` 就成功了，浏览器打开这个地址。
+看到输出 `Local: http://localhost:5173` 就成功了。
 
 ---
 
-**4. 首次使用**
+#### 第 5 步：打开并使用
 
-点右上角「手动刷新」拉取数据。之后每 5 分钟自动刷新，不用管。
+浏览器打开 **http://localhost:5173**。
+
+首次没有数据，点右上角「手动刷新」。之后每 5 分钟自动刷新，不用管。
 
 ---
 
